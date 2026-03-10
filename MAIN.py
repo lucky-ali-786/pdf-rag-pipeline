@@ -13,14 +13,6 @@ docs=loader.load()
 embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001",api_key="YOUR_API_KEY")
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 split_docs=text_splitter.split_documents(documents=docs)
-vector_store=QdrantVectorStore.from_documents(
-    documents=[],
-    url="http://localhost:6333",
-    collection_name="my_first_vector_db",
-    embedding=embeddings
-)
-vector_store.add_documents(documents=split_docs)
-# ingestion done
 retreiver=QdrantVectorStore.from_existing_collection(
         url="http://localhost:6333",
         collection_name="my_first_vector_db",
@@ -49,3 +41,4 @@ content=client.models.generate_content(
 # WRITING IN SOME EXTERNAL FILE (OPTIONAL)!
 with open(f"sample.md", "w") as file:
             file.write(f"{content.text}")
+
