@@ -29,13 +29,32 @@ The system operates in two distinct phases:
 ## 💻 Getting Started
 
 ### Prerequisites
-* Python 3.8+
-* Qdrant instance (Local Docker container or Qdrant Cloud)
-* API Keys for your chosen LLM
+- Python 3.8+
+- [Docker](https://www.docker.com/) (to run Qdrant locally)
+- Google Gemini API Key
 
-### Installation
+### Installation & Setup
 
 1. **Clone the repository:**
    ```bash
    git clone [https://github.com/yourusername/your-repo-name.git](https://github.com/yourusername/your-repo-name.git)
    cd your-repo-name
+   
+2.**Set up a virtual environment:**
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+3.**Install dependencies:**
+pip install -r requirements.txt
+
+4.**Environment Variables:**
+Create a .env file in the root directory and securely add your API key:
+GEMINI_API_KEY=your_api_key_here
+
+5.**Start Qdrant (Local Vector DB):**
+Run Qdrant via Docker. This keeps your database running in the background:
+docker run -p 6333:6333 -p 6334:6334 \-v $(pwd)/qdrant_storage:/qdrant/storage:z \qdrant/qdrant
+
+6.**Run Data Ingestion:**
+Process the PDF and store the vector embeddings in Qdrant:
+python ingest.py
